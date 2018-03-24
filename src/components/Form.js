@@ -1,4 +1,6 @@
 import React from 'react';
+import FaceCalendar from './FaceCalendar';
+import {Link, Route, Switch} from 'react-router-dom';
 
 class Form extends React.Component{
   constructor(props){
@@ -7,46 +9,61 @@ class Form extends React.Component{
     this.handleDate = this.handleDate.bind(this);
     this.handleState = this.handleState.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
-    this.saveData = this.saveData.bind(this);
+    this.saveDay = this.saveDay.bind(this);
 
     this.state = {
       date: '',
       state: '',
       message: '',
-      saveData: []
+      saveData: [],
+      isLoading: true
     }
+  }
+
+  componentWillMount(){
+    localStorage.getItem('saveData') &&
+      this.setState({
+        saveData: JSON.parse(localStorage.getItem('saveData')),
+        isLoading: false
+      })
+  }
+
+  componentWillUpdate(nextProps, nextState){
+    let saveData = this.state.saveData;
+    localStorage.setItem('saveData', JSON.stringify(saveData));
   }
 
   handleDate(date){
     let dateInput = date.target.value;
-
     this.setState({
       date: dateInput
     })
   }
 
-
 	handleState(state){
     let stateInput = state.target.value;
-
     this.setState({
       state: stateInput
     })
 	}
 
-
   handleMessage(msg){
     let msgInput = msg.target.value;
-
     this.setState({
       message: msgInput
     })
   }
 
-  saveData(){
+  saveDay(){
+    let dataDate = this.state.saveData;
 
+    dataDate.push({
+      date: this.state.date,
+      state: this.state.state,
+      msg: this.state.message
+    })
     this.setState({
-
+      saveData: dataDate
     })
   }
 
@@ -57,7 +74,7 @@ class Form extends React.Component{
         <form  action="">
           <div className="form__date">
             <label htmlFor="date">Fecha</label>
-            <input type="date" name="date" onClick={this.handleDate}/>
+            <input type="date" name="date" onChange={this.handleDate}/>
           </div>
           <div className="form__state">
             <p>Estado</p>
@@ -75,9 +92,15 @@ class Form extends React.Component{
         </form>
 
         <div className="form__btn">
-          <button className="form__btn--style" onClick={this.saveData}>Guardar</button>
+          <Link className="link" to='/calendar'>
+            <button className="form__btn--style" onClick={this.saveDay}>Guardar</button>
+          </Link>
           <button className="form__btn--style">Cancelar</button>
         </div>
+
+        <Switch>
+          <Route exact path="/calendar" component={FaceCalendar} />
+        </Switch>
       </div>
     );
   }
