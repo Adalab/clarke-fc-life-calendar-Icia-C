@@ -10,6 +10,7 @@ class Form extends React.Component{
     this.handleState = this.handleState.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
     this.saveDay = this.saveDay.bind(this);
+    //this.paintSmile = this.paintSmile.bind(this);
 
     this.state = {
       date: '',
@@ -33,25 +34,18 @@ class Form extends React.Component{
     localStorage.setItem('saveData', JSON.stringify(saveData));
   }
 
+  //catch input values
   handleDate(date){
     let dateInput = date.target.value;
-    this.setState({
-      date: dateInput
-    })
+    this.setState({ date: dateInput })
   }
-
-	handleState(state){
+  handleState(state){
     let stateInput = state.target.value;
-    this.setState({
-      state: stateInput
-    })
-	}
-
+    this.setState({ state: stateInput })
+  }
   handleMessage(msg){
     let msgInput = msg.target.value;
-    this.setState({
-      message: msgInput
-    })
+    this.setState({ message: msgInput })
   }
 
   saveDay(){
@@ -66,7 +60,6 @@ class Form extends React.Component{
       saveData: dataDate
     })
   }
-
 
   render(){
     return(
@@ -99,7 +92,10 @@ class Form extends React.Component{
         </div>
 
         <Switch>
-          <Route exact path="/calendar" component={FaceCalendar} />
+          <Route exact path="/calendar" render= {() =>
+            <FaceCalendar saveData={this.state.saveData}
+            /> }
+          />
         </Switch>
       </div>
     );
