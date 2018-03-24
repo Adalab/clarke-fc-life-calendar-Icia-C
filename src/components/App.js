@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Form from './Form';
+//import FaceCalendar from './FaceCalendar';
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-      <h1>qué tal tu día</h1>
       <Form />
+      
       </div>
     );
   }

@@ -1,0 +1,22 @@
+.form__btn {
+  display:flex;
+  flex-direction: column;
+  margin: 25px;
+}
+.form__btn--style {
+  width: 250px;
+  height: 30px;
+  margin: 10px;
+  background: #3a7999;
+  color: #f2f2f2;
+  font-weight: bold;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: width 2s;
+  &:hover {
+    width: 300px;
+    background-color: #ccf151;
+    font-size: 19px;
+  }
+}
